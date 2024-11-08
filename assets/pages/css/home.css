@@ -1,0 +1,34 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    background-color: black !important;
+}
+
+#user-logo{
+    width: 45px;
+}
+
+#whole{
+    display: flex;
+    gap: 20px;
+}
+
+#heading{
+margin-left: 10px;
+font-size: 40px; 
+font-weight: bold;
+color: white; 
+text-shadow: 
+0 0 5px violet, 
+0 0 10px violet, 
+0 0 15px violet, 
+0 0 20px #DA70D6, 
+0 0 30px #DA70D6, 
+0 0 40px #DA70D6;
+}
+.form-control:focus {
+    box-shadow: 0 0 4px 1px #DA70D6 !important; 
+    outline: none;
+  }
