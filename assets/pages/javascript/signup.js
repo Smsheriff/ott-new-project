@@ -39,6 +39,7 @@ const signform = document.getElementById("signform");
 const minlength = 8; 
 const hasNumber = /[0-9]/;
 const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/;
+const startsWithUppercase = /^[A-Z]/;
 
 
 signform.addEventListener("submit", (event) => {
@@ -93,6 +94,10 @@ else if(!hasSpecialChar.test(password.value)){
 passworderror.textContent = "Password must contain atleast one special character.";
 valid = false;
 }
+else if (!startsWithUppercase.test(password.value)) {
+    passworderror.textContent = "Password must start with an uppercase letter.";
+    valid = false;
+}
 
 // Validate confirm password
 if(confirmPassword.value !== password.value){
@@ -122,7 +127,7 @@ if (valid) {
             btn.innerText = 'Create an account';
 
             // Optionally, redirect to another page
-            window.location.href = "../html/home.html"; // Redirect after successful sign-up
+            window.location.href = "../html/home.html"; 
         })
         .catch((error) => {
             const errorCode = error.code;
