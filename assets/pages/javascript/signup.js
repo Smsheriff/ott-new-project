@@ -37,9 +37,12 @@ const btn = document.getElementById("signup-btn");
 const signform = document.getElementById("signform");
 
 const minlength = 8; 
+
+// Regex for validation
 const hasNumber = /[0-9]/;
 const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/;
 const startsWithUppercase = /^[A-Z]/;
+const containsOnlyNumbers = /^[0-9]+$/;
 
 
 signform.addEventListener("submit", (event) => {
@@ -53,15 +56,22 @@ cpasserror.textContent = "";
 
 let valid = true;
 
+
 // Validate username
-if(name.value.length<3){
-nameerror.textContent = "Username must be atleast 3 characters long";
-valid = false;
-}
-if(name.value.length === 0){
+if (name.value.length === 0) {
     nameerror.textContent = "Username required";
     valid = false;
-    }
+} else if (name.value.length < 3) {
+    nameerror.textContent = "Username must be at least 3 characters long";
+    valid = false;
+} else if (hasSpecialChar.test(name.value)) {
+    nameerror.textContent = "Username must not contain special characters";
+    valid = false;
+} else if (containsOnlyNumbers.test(name.value)) {
+    nameerror.textContent = "Username must not consist entirely of numbers";
+    valid = false;
+}
+
 
 // Validate email
 if(email.value.length === 0){
@@ -172,7 +182,7 @@ const togglePassword = document.querySelector('#togglePassword');
 togglePassword.addEventListener('click', function () {
     const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
     password.setAttribute('type', type);
-    this.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
+    this.innerHTML = type === 'password' ?  '<i class="fas fa-eye-slash"></i>': '<i class="fas fa-eye"></i>';
 });
 
 // Toggle visibility for the confirm password field
@@ -180,5 +190,6 @@ const toggleConfirmPassword = document.querySelector('#toggleConfirmPassword');
 toggleConfirmPassword.addEventListener('click', function () {
     const type = confirmPassword.getAttribute('type') === 'password' ? 'text' : 'password';
     confirmPassword.setAttribute('type', type);
-    this.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
+    this.innerHTML = type === 'password' ? '<i class="fas fa-eye-slash"></i>' : '<i class="fas fa-eye"></i>';
 });
+
