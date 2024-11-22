@@ -76,6 +76,10 @@ else if (hasSpaces.test(name.value)) {
     nameerror.textContent = "Username must not contain spaces";
     valid = false;
 }
+if (name.value.length > 8) {
+    nameerror.textContent = "Username must not exceed 8 characters";
+    valid = false;
+}
 
 
 // Validate email
