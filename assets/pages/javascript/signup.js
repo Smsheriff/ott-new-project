@@ -43,6 +43,7 @@ const hasNumber = /[0-9]/;
 const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/;
 const startsWithUppercase = /^[A-Z]/;
 const containsOnlyNumbers = /^[0-9]+$/;
+const hasSpaces = /\s/;
 
 
 signform.addEventListener("submit", (event) => {
@@ -69,6 +70,10 @@ if (name.value.length === 0) {
     valid = false;
 } else if (containsOnlyNumbers.test(name.value)) {
     nameerror.textContent = "Username must not consist entirely of numbers";
+    valid = false;
+}
+else if (hasSpaces.test(name.value)) {
+    nameerror.textContent = "Username must not contain spaces";
     valid = false;
 }
 
