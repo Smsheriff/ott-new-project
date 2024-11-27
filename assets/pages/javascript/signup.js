@@ -37,13 +37,15 @@ const btn = document.getElementById("signup-btn");
 const signform = document.getElementById("signform");
 
 const minlength = 8; 
-
 // Regex for validation
 const hasNumber = /[0-9]/;
 const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/;
 const startsWithUppercase = /^[A-Z]/;
 const containsOnlyNumbers = /^[0-9]+$/;
 const hasSpaces = /\s/;
+const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+const invalidSequenceRegex = /(\.{2,}|,{2,})/; 
+
 
 
 signform.addEventListener("submit", (event) => {
@@ -56,7 +58,6 @@ passworderror.textContent = "";
 cpasserror.textContent = "";
 
 let valid = true;
-
 
 // Validate username
 if (name.value.length === 0) {
@@ -76,10 +77,6 @@ else if (hasSpaces.test(name.value)) {
     nameerror.textContent = "Username must not contain spaces";
     valid = false;
 }
-if (name.value.length > 8) {
-    nameerror.textContent = "Username must not exceed 8 characters";
-    valid = false;
-}
 
 
 // Validate email
@@ -92,6 +89,14 @@ else if(!validateEmail(email.value)){
 emailerror.textContent = "Please enter a valid email";
 valid = false;
 }
+else if (!emailRegex.test(email.value)) {
+    emailerror.textContent = "Please enter a valid email";
+    valid = false;
+  } 
+else if (invalidSequenceRegex.test(email.value)) {
+    emailerror.textContent = "Email must not contain invalid sequences";
+    valid = false;
+  }
 
  // Validate password
 if (password.value.length === 0) {
@@ -202,3 +207,7 @@ toggleConfirmPassword.addEventListener('click', function () {
     this.innerHTML = type === 'password' ? '<i class="fas fa-eye-slash"></i>' : '<i class="fas fa-eye"></i>';
 });
 
+window.history.pushState(null, null, window.location.href);
+window.addEventListener('popstate', function () {
+    window.history.pushState(null, null, window.location.href);
+});
