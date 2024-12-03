@@ -5,24 +5,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/home.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/carsoel.css">
+    <link rel="stylesheet" href="../css/logout.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
 </head>
 <body>
-    <nav class="navbar bg-body-black">
-        <div class="container-fluid">
+    
+
+    <nav class="navbar">
+        <div class="nav-content">
             <h1 id="heading">MOVIES WAVE</h1>
-            <form class="d-flex" role="search">
-                <div id="whole">
-                    <div class="input-group">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <span class="input-group-text" id="basic-addon1"><i class="bi bi-search"></i></span>
+            <div id="whole">
+                <div class="search-container">
+                    <div class="search-icon" id="search-icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24" fill="white">
+                        <path d="M796 936 528 668q-27 21-59 31t-67 10q-108 0-184-76T142 448q0-108 76-184t184-76q108 0 184 76t76 184q0 36-10 67t-31 59l268 268-83 83ZM384 640q75 0 127.5-52.5T564 460q0-75-52.5-127.5T384 280q-75 0-127.5 52.5T204 460q0 75 52.5 127.5T384 640Z"/>
+                      </svg>
                     </div>
-                    <img src="../../images/profilelogo.png" alt="user-logo" id="user-logo">
+                    <div class="dropdown-box" id="dropdown-box">
+                      <input type="text" id="search-input" placeholder="Search movies..." />
+                      <div id="search-suggestions" class="suggestions-dropdown"></div>
+                    </div>
+                  </div>
+                  
+                  
+                <div class="profile-container">
+                    <img src="../../images/my-profile.png" alt="Profile" id="profile-logo" class="profile-logo" />
+                    <div id="dropdown-menu" class="dropdown-menu">
+                        <div class="dropdown-item">Profile</div>
+                        <div class="dropdown-item" onclick="logoutUser()">Logout</div>
+                    </div>
                 </div>
-            </form>
+            </div>
         </div>
     </nav>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <section class="carousel" id="carousel">
+        <div class="carousel-container"></div>
+        <button class="prev" id="prev">&#10094;</button>
+        <button class="next" id="next">&#10095;</button>
+    </section>
+
+    <div id="custom-carousel-wrapper"></div>
+
+    
+  <script src="../javascript/home.js"></script>
+  <script src="../javascript/carsoel.js"></script>
+  <script src="../javascript/logout.js"></script>
+
 </body>
 </html>

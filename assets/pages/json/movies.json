@@ -1,0 +1,71 @@
+{
+    "movies_slide":[
+      {
+        "id": "1.1",
+        "title": "Joker: Folie à Deux",
+        "description": "Arthur Fleck returns in this haunting sequel, joined by Harley Quinn, <br>as they navigate the darker sides of Gotham and delve deeper <br>into their descent into madness.",
+        "genre": "Crime, Drama, Thriller",
+        "releaseDate": "2024-10-04",
+        "duration": 140, 
+        "language": "English",
+        "rating": 4.5,
+        "bannerImage": "https://static1.moviewebimages.com/wordpress/wp-content/uploads/2024/10/joker-and-harley.jpg"
+      },
+      {
+        "id": "1.2",
+        "title": "Titanic",
+        "description": "A timeless love story unfolds aboard the ill-fated R.M.S. Titanic, <br>blending romance, drama, and historical tragedy.",
+        "genre": "Romance, Drama",
+        "releaseDate": "1997-12-19",
+        "duration": 195,
+        "language": "English",
+        "rating": 4.8,
+        "bannerImage": "https://wallpapers.com/images/hd/titanic-cruising-at-night-zbknc6f8rl1vw09e.jpg"
+      },
+      {
+        "id": "1.3",
+        "title": "It Chapter Two",
+        "description": "The Losers' Club reunites as adults to confront Pennywise,<br> who has returned to terrorize the town of Derry 27 years after their first encounter.",
+        "genre": "Horror, Thriller",
+        "releaseDate": "2019-09-06",
+        "duration": 169,
+        "language": "English",
+        "rating": 4.0,
+        "bannerImage": "https://wallpapercave.com/wp/wp4326214.jpg"
+      },
+      {
+        "id": "1.4",
+        "title": "KGF Chapter 2",
+        "description": "After conquering the Kolar Gold Fields, Rocky must retain his supremacy<br> as he faces new foes and government forces determined to bring him down.",
+        "genre": "Action, Drama, Thriller",
+        "releaseDate": "2022-04-14",
+        "duration": 168,
+        "language": "Kannada",
+        "rating": 4.6,
+        "bannerImage": "https://m.media-amazon.com/images/M/MV5BZTQ5YzkxMmMtMmJlMC00ZTQ4LTgzOGYtZWM1ZDZmYWVhY2RkXkEyXkFqcGc@._V1_.jpg"
+      },
+      {
+        "id": "1.5",
+        "title": "Interstellar",
+        "description": "A team of explorers travels through a wormhole in space in <br>an attempt to ensure humanity's survival as Earth faces environmental collapse.",
+        "genre": "Sci-Fi, Adventure, Drama",
+        "releaseDate": "2014-11-07",
+        "duration": 169,
+        "language": "English",
+        "rating": 4.7,
+        "bannerImage": "https://wallpapercrafter.com/desktop4/1198946-Movies-Hollywood-Movies-hollywood-2014-representation.jpg"
+      },
+      {
+        "id": "1.6",
+        "title": "Inspection",
+        "description": "A young recruit at a military academy must navigate a brutal training<br> process while confronting his past and his inner demons.",
+        "genre": "Drama, Thriller",
+        "releaseDate": "2023-05-15",
+        "duration": 120,
+        "language": "English",
+        "rating": 4.2,
+        "bannerImage": "https://wallpapercave.com/wp/fWnWpHj.jpg"
+      }
+    ]
+  }
+  

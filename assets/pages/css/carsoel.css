@@ -1,0 +1,169 @@
+/* General Wrapper for the Carousel */
+#custom-carousel-wrapper {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    margin: 20px 0;
+    padding: 10px 0;
+    background: #000000; /* Optional background for contrast */
+    display: flex;
+    flex-direction: column;
+    gap: 30px; /* Space between categories */
+  }
+  
+  /* Carousel Section */
+  .custom-carousel-section {
+    width: 100%;
+    position: relative;
+    padding: 10px 20px;
+  }
+  
+  /* Carousel Title */
+  .custom-carousel-section h2 {
+    font-size: 24px;
+    color: #fff;
+    margin-bottom: 15px;
+  }
+  
+  /* Carousel Track */
+  .custom-carousel-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    gap: 20px; /* Space between cards */
+    width: max-content; /* Ensures the container expands to fit all cards */
+  }
+  
+  /* Movie Card */
+  .custom-movie-card {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    flex: 0 0 270px; /* Adjust card width */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+  
+  .custom-movie-card:hover {
+    transform: scale(1.05); /* Zoom effect */
+  }
+  
+  /* Image Wrapper */
+  .image-wrapper-1 {
+    position: relative;
+    width: 100%;
+    height: 350px; /* Fixed height for uniformity */
+    overflow: hidden;
+  }
+  
+  .image-wrapper-1 img {
+    width: 85%;
+    height: 95%;
+    object-fit: cover; /* Ensures the image fits nicely */
+    transition: transform 0.3s ease;
+  }
+  
+  .custom-movie-card:hover img {
+    transform: scale(1.1); /* Image zooms slightly on hover */
+  }
+  
+  /* Movie Details (Hidden by Default) */
+  .movie-details {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 350px;
+    background: rgba(0, 0, 0, 0.822); 
+    color: #fff;
+    padding: 15px;
+    opacity: 0; /* Initially hidden */
+    transform: translateY(100%); /* Position below the card */
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    text-align: left;
+  }
+  
+  .movie-details h3 {
+    font-size: 22px;
+    margin: 8px 0;
+  }
+  
+  .movie-details p {
+    font-size: 15px;
+    margin: 5px 0;
+    line-height: 1.4;
+  }
+  
+  .watch-button {
+    display: inline-block;
+    padding: 8px 15px;
+    background-color: rgb(179, 47, 179);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .watch-button:hover {
+    background-color: rgb(9, 111, 212);
+  }
+  
+  /* Show Details on Hover */
+  .custom-movie-card:hover .movie-details {
+    opacity: 1; /* Make the details visible */
+    transform: translateY(0); /* Slide into view */
+  }
+  
+  /* Navigation Buttons */
+  .custom-carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: #fff;
+    font-size: 24px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  
+  .custom-carousel-btn:hover {
+    background: rgba(255, 255, 255, 0.8);
+    color: #000;
+  }
+  
+  .custom-prev-btn {
+    left: 10px;
+  }
+  
+  .custom-next-btn {
+    right: 10px;
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .custom-movie-card {
+      flex: 0 0 200px; /* Smaller cards for smaller screens */
+    }
+  
+    .image-wrapper-1 {
+      height: 300px; /* Adjusted height */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .custom-movie-card {
+      flex: 0 0 150px; /* Even smaller for very small screens */
+    }
+  
+    .image-wrapper-1 {
+      height: 200px; /* Adjusted height */
+    }
+  }
+  

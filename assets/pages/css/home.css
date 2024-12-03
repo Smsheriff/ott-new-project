@@ -1,34 +1,230 @@
-*{
+/* Global Reset */
+* {
     margin: 0;
     padding: 0;
-}
-body{
-    background-color: black !important;
-}
-
-#user-logo{
-    width: 45px;
-}
-
-#whole{
-    display: flex;
-    gap: 20px;
-}
-
-#heading{
-margin-left: 10px;
-font-size: 40px; 
-font-weight: bold;
-color: white; 
-text-shadow: 
-0 0 5px violet, 
-0 0 10px violet, 
-0 0 15px violet, 
-0 0 20px #DA70D6, 
-0 0 30px #DA70D6, 
-0 0 40px #DA70D6;
-}
-.form-control:focus {
-    box-shadow: 0 0 4px 1px #DA70D6 !important; 
-    outline: none;
+    box-sizing: border-box;
   }
+  
+  body {
+    background-color: rgb(0, 0, 0) !important;
+    color: white;
+  }
+  
+  .navbar {
+    position: fixed; /* Fix the navbar at the top */
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0); /* Transparent black */
+    color: white;
+    padding: 10px 20px;
+    z-index: 1000; /* Ensure navbar stays on top */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s ease;
+  }
+  
+  .navbar.scrolled {
+    background-color: rgba(255, 255, 255, 0.194); /* Lighter transparent navbar */
+  }
+  
+  
+  .nav-content{
+    display: flex;
+  }
+  
+  
+  /* Search icon styles */
+  .search-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: relative; /* Ensure the dropdown is positioned relative to this */
+  }
+  
+  .search-icon :hover{
+    background-color: rgba(0, 0, 0, 0.306);
+    border-radius: 50%;
+    width: 35px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+  /* Dropdown box styles */
+  .dropdown-box {
+    position: absolute;
+    width: 600px; /* Adjust width */
+    max-width: 100%; /* Ensure dropdown doesn't exceed the viewport */
+    padding: 30px;
+    background-color: #1f1f1f;
+    border: 3px solid #ccc;
+    border-radius: 8px;
+    display: none; /* Hidden initially */
+    z-index: 1000;
+    box-sizing: border-box;
+    top: 100%; /* Dropdown appears below the search icon */
+    left: -90px;/* Default position is aligned with the left edge of the search icon */
+    transform: translateX(0); /* Allow adjustment in JS for better control */
+  }
+  
+  /* Suggestions dropdown styles */
+  .suggestions-dropdown {
+    max-height: 300px;
+    overflow-y: auto;
+    background-color: #1f1f1f;
+    color: white;
+    border-radius: 8px;
+  }
+  
+  /* Suggestions styling */
+  .suggestions-dropdown p {
+    padding: 16px;
+    margin: 0;
+    cursor: pointer;
+  }
+  
+  .suggestions-dropdown p:hover {
+    background-color: #444;
+  }
+  
+  #search-input{
+       width: 500px;
+       height: 40px;
+       background-color: black;
+       border: none;
+       padding: 20px;
+       color: white;
+      }
+  
+  
+  /* Heading Styling */
+  #heading {
+    display: flex;
+    margin-left: 40px;
+    font-size: 50px;
+    font-weight: bold;
+    color: rgb(214, 6, 166);
+    object-fit: cover;
+  }
+  
+  
+  #whole {
+    display: flex;
+    margin-left: 900px;
+    gap: 20px;
+  }
+  
+  
+  .play-button{
+    background: none;
+    border: none;
+    position: relative;
+    left: 300px;
+    bottom: 100px;
+  }
+  
+  .carousel {
+    position: relative;
+    width: 100%;
+    overflow: hidden; 
+    max-width: 100%; 
+    margin: auto;
+  }
+  
+  /* Ensure the carousel container stretches wide enough */
+  .carousel-container {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    will-change: transform;
+    width: 100%; /* Ensure it fills the container */
+  }
+  
+  .movie-card {
+    flex: 0 0 100%; /* Each movie card takes 100% of the container width */
+    height: 500px; /* Fixed height for each movie card */
+    position: relative;
+  }
+  
+  
+  .image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%; /* Ensure the container takes up the full height */
+    overflow: hidden;
+  }
+  
+  .movie-banner {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Ensures the full image is visible without cropping */
+    display: block;
+    margin-left: 350px;
+  }
+  
+  /* Movie Info Styling */
+  .movie-info {
+    position: absolute;
+    bottom: 0;
+    top: 30px;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    background: linear-gradient(90deg, rgb(0, 0, 0) 49%, rgba(5,4,5,0) 64%, rgba(0,0,0,0) 90%);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start; /* Align content to the left */
+  }
+  
+  .movie-info h3 {
+    font-size: 60px;
+    margin-bottom: 10px;
+    color: rgb(9, 111, 212);
+    margin-left: 40px;
+  }
+  
+  .movie-info p {
+    margin: 5px 0;
+    font-size: 20px;
+    margin-left: 50px;
+  }
+  
+  /* Navigation Buttons */
+  .prev,
+  .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 10px;
+    z-index: 10;
+    border-radius: 50%;
+  }
+  
+  .prev:hover,
+  .next:hover {
+    background-color: #333;
+  }
+  
+  .prev {
+    left: 20px;
+  }
+  
+  .next {
+    right: 20px;
+  }
+  
+  
+  
