@@ -68,8 +68,15 @@ if (navbar) {
 
 
 
-// Initialize Carousel
-function initializeCarousel(movies) {
+
+
+
+
+
+
+
+
+      function initializeCarousel(movies) {
   const carouselContainer = document.querySelector('.carousel-container');
   const prevButton = document.getElementById('prev');
   const nextButton = document.getElementById('next');
@@ -79,7 +86,7 @@ function initializeCarousel(movies) {
     return;
   }
 
-  let currentIndex = 0;
+  let currentIndex = 0; // Start from the first slide
   let isAnimating = false;
 
   // Create and load movie cards into the carousel
@@ -87,6 +94,15 @@ function initializeCarousel(movies) {
     const movieCard = createMovieCard(movie);
     carouselContainer.appendChild(movieCard);
   });
+
+  // Duplicate slides for infinite loop effect
+  movies.forEach(movie => {
+    const duplicateCard = createMovieCard(movie);
+    carouselContainer.appendChild(duplicateCard);
+  });
+
+  // Set the initial position
+  updateCarousel(currentIndex, carouselContainer);
 
   // Event Listeners for navigation buttons
   nextButton.addEventListener('click', () => {
@@ -101,61 +117,83 @@ function initializeCarousel(movies) {
     }
   });
 
-  // Handle window resize to adjust the carousel
-  window.addEventListener('resize', () => {
-    updateCarousel(currentIndex, carouselContainer);
-  });
+  // Auto-loop functionality
+  let autoSlideInterval = setInterval(() => {
+    moveToNext(movies.length, carouselContainer);
+  }, 4000); // Auto-move every 4 seconds
 
-  // Initialize the carousel position
-  updateCarousel(currentIndex, carouselContainer);
+  // Pause auto-loop on hover
+  carouselContainer.addEventListener('mouseover', () => clearInterval(autoSlideInterval));
+  carouselContainer.addEventListener('mouseout', () => {
+    autoSlideInterval = setInterval(() => {
+      moveToNext(movies.length, carouselContainer);
+    }, 4000);
+  });
 
   // Functions to create movie cards and manage carousel transitions
   function createMovieCard(movie) {
     const movieCard = document.createElement('div');
     movieCard.classList.add('movie-card');
-    movieCard.innerHTML = `
-      <div class="image-wrapper">
-      <img src="${movie.bannerImage}" alt="${movie.title}" class="movie-banner">
-    </div>
-    <div class="movie-info">
-      <h3>${movie.title}</h3>
-      <p>${movie.description}</p>
-      <p><strong>Genre:</strong> ${movie.genre}</p>
-      <p><strong>Release Date:</strong> ${movie.releaseDate}</p>
-      <p><strong>Duration:</strong> ${movie.duration} mins</p>
-      <p><strong>Language:</strong> ${movie.language}</p>
-      <p><strong>Rating:</strong> ⭐ ${movie.rating}</p>
-      <button class="prime-play-button" onclick="playTrailer('${movie.trailerUrl}')">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="prime-play-icon">
-          <path d="M8 5v14l11-7z" fill="currentColor"></path>
-        </svg> play
-      </button>
-    </div>
+    movieCard.innerHTML = `<div class="image-wrapper">
+        <img src="${movie.bannerImage}" alt="${movie.title}" class="movie-banner">
+      </div>
+      <div class="movie-info">
+        <h3>${movie.title}</h3>
+        <p>${movie.description}</p>
+        <p><strong>Genre:</strong> ${movie.genre}</p>
+        <p><strong>Release Date:</strong> ${movie.releaseDate}</p>
+        <p><strong>Duration:</strong> ${movie.duration} mins</p>
+        <p><strong>Language:</strong> ${movie.language}</p>
+        <p><strong>Rating:</strong> ⭐ ${movie.rating}</p>
+        <button class="prime-play-button" onclick="playTrailer('${movie.trailerUrl}')">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="prime-play-icon">
+            <path d="M8 5v14l11-7z" fill="currentColor"></path>
+          </svg> Play
+        </button>
+      </div>
+   
     `;
     return movieCard;
   }
 
   function moveToNext(totalMovies, container) {
+    if (isAnimating) return;
     isAnimating = true;
-    currentIndex = (currentIndex + 1) % totalMovies; // Loop back to the start
+    currentIndex++;
     updateCarousel(currentIndex, container);
-    setTimeout(() => (isAnimating = false), 500); // Match transition duration
+
+    setTimeout(() => {
+      if (currentIndex === totalMovies) {
+        currentIndex = 0; // Reset to the first slide
+        container.style.transition = 'none'; // Disable transition for instant move
+        updateCarousel(currentIndex, container);
+        setTimeout(() => {
+          container.style.transition = 'transform 0.5s ease-in-out'; // Re-enable transition
+        });
+      }
+      isAnimating = false;
+    }, 500); // Match the transition duration
   }
 
   function moveToPrev(totalMovies, container) {
+    if (isAnimating) return;
     isAnimating = true;
-    currentIndex = (currentIndex - 1 + totalMovies) % totalMovies; // Loop to the end
+    currentIndex--;
+    if (currentIndex < 0) {
+      currentIndex = totalMovies - 1; // Move to the last slide
+      container.style.transition = 'none'; // Disable transition for instant move
+      updateCarousel(currentIndex, container);
+      setTimeout(() => {
+        container.style.transition = 'transform 0.5s ease-in-out'; // Re-enable transition
+      });
+    }
     updateCarousel(currentIndex, container);
-    setTimeout(() => (isAnimating = false), 500); // Match transition duration
+    isAnimating = false;
   }
 
   function updateCarousel(index, container) {
     const slideWidth = container.firstElementChild.offsetWidth; // Get dynamic slide width
     const offset = -index * slideWidth; // Calculate offset
-    container.style.transition = 'transform 0.5s ease-in-out';
     container.style.transform = `translateX(${offset}px)`; // Apply offset
   }
 }
-
-
-
