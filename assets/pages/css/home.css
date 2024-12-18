@@ -1,230 +1,297 @@
 /* Global Reset */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    background-color: rgb(0, 0, 0) !important;
-    color: white;
-  }
-  
-  .navbar {
-    position: fixed; /* Fix the navbar at the top */
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: rgba(0, 0, 0, 0); /* Transparent black */
-    color: white;
-    padding: 10px 20px;
-    z-index: 1000; /* Ensure navbar stays on top */
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: background-color 0.3s ease;
-  }
-  
-  .navbar.scrolled {
-    background-color: rgba(255, 255, 255, 0.194); /* Lighter transparent navbar */
-  }
-  
-  
-  .nav-content{
-    display: flex;
-  }
-  
-  
-  /* Search icon styles */
-  .search-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    position: relative; /* Ensure the dropdown is positioned relative to this */
-  }
-  
-  .search-icon :hover{
-    background-color: rgba(0, 0, 0, 0.306);
-    border-radius: 50%;
-    width: 35px;
-    height: 32px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-  }
-  /* Dropdown box styles */
-  .dropdown-box {
-    position: absolute;
-    width: 600px; /* Adjust width */
-    max-width: 100%; /* Ensure dropdown doesn't exceed the viewport */
-    padding: 30px;
-    background-color: #1f1f1f;
-    border: 3px solid #ccc;
-    border-radius: 8px;
-    display: none; /* Hidden initially */
-    z-index: 1000;
-    box-sizing: border-box;
-    top: 100%; /* Dropdown appears below the search icon */
-    left: -90px;/* Default position is aligned with the left edge of the search icon */
-    transform: translateX(0); /* Allow adjustment in JS for better control */
-  }
-  
-  /* Suggestions dropdown styles */
-  .suggestions-dropdown {
-    max-height: 300px;
-    overflow-y: auto;
-    background-color: #1f1f1f;
-    color: white;
-    border-radius: 8px;
-  }
-  
-  /* Suggestions styling */
-  .suggestions-dropdown p {
-    padding: 16px;
-    margin: 0;
-    cursor: pointer;
-  }
-  
-  .suggestions-dropdown p:hover {
-    background-color: #444;
-  }
-  
-  #search-input{
-       width: 500px;
-       height: 40px;
-       background-color: black;
-       border: none;
-       padding: 20px;
-       color: white;
-      }
-  
-  
-  /* Heading Styling */
-  #heading {
-    display: flex;
-    margin-left: 40px;
-    font-size: 50px;
-    font-weight: bold;
-    color: rgb(214, 6, 166);
-    object-fit: cover;
-  }
-  
-  
-  #whole {
-    display: flex;
-    margin-left: 900px;
-    gap: 20px;
-  }
-  
-  
-  .play-button{
-    background: none;
-    border: none;
-    position: relative;
-    left: 300px;
-    bottom: 100px;
-  }
-  
-  .carousel {
-    position: relative;
-    width: 100%;
-    overflow: hidden; 
-    max-width: 100%; 
-    margin: auto;
-  }
-  
-  /* Ensure the carousel container stretches wide enough */
-  .carousel-container {
-    display: flex;
-    transition: transform 0.5s ease-in-out;
-    will-change: transform;
-    width: 100%; /* Ensure it fills the container */
-  }
-  
-  .movie-card {
-    flex: 0 0 100%; /* Each movie card takes 100% of the container width */
-    height: 500px; /* Fixed height for each movie card */
-    position: relative;
-  }
-  
-  
-  .image-wrapper {
-    position: relative;
-    width: 100%;
-    height: 100%; /* Ensure the container takes up the full height */
-    overflow: hidden;
-  }
-  
-  .movie-banner {
-    width: 100%;
-    height: 100%;
-    object-fit: contain; /* Ensures the full image is visible without cropping */
-    display: block;
-    margin-left: 350px;
-  }
-  
-  /* Movie Info Styling */
-  .movie-info {
-    position: absolute;
-    bottom: 0;
-    top: 30px;
-    width: 100%;
-    height: 100%;
-    padding: 20px;
-    background: linear-gradient(90deg, rgb(0, 0, 0) 49%, rgba(5,4,5,0) 64%, rgba(0,0,0,0) 90%);
-    color: white;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: flex-start; /* Align content to the left */
-  }
-  
-  .movie-info h3 {
-    font-size: 60px;
-    margin-bottom: 10px;
-    color: rgb(9, 111, 212);
-    margin-left: 40px;
-  }
-  
-  .movie-info p {
-    margin: 5px 0;
-    font-size: 20px;
-    margin-left: 50px;
-  }
-  
-  /* Navigation Buttons */
-  .prev,
-  .next {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    padding: 10px;
-    z-index: 10;
-    border-radius: 50%;
-  }
-  
-  .prev:hover,
-  .next:hover {
-    background-color: #333;
-  }
-  
-  .prev {
-    left: 20px;
-  }
-  
-  .next {
-    right: 20px;
-  }
-  
-  
-  
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: black ;
+  color: white;
+}
+
+.heading{
+  background: transparent;
+  margin-top: 20px;
+  width: 400px;
+  height: 160px;
+  position: relative;
+  right: 50px;
+}
+.navbar {
+  width: 100%;
+  height: 60px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 0 4%;
+  background: rgba(12, 17, 27, 0.0); /* Fully transparent by default */
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  transition: background 0.3s ease; /* Smooth transition for background change */
+}
+
+.navbar.scrolled {
+  background: rgba(12, 17, 27, 0.8); /* Slightly transparent background */
+}
+
+.right-container {
+  display: block;
+  margin-left: auto;
+}
+
+.search-box {
+  border: none;
+  border-bottom: 1px solid #aaa;
+  background: transparent;
+  outline: none;
+  height: 30px;
+  color: #fff;
+  width: 250px;
+  text-transform: capitalize;
+  font-size: 16px;
+  font-weight: 500px;
+  transition: 0.5s;
+}
+
+.search-box::placeholder {
+  color: #aaa;
+}
+
+.search-box:focus {
+  width: 300px;
+  border-color: #cb0cbf;
+}
+
+
+ #search-btn {
+  background: #c307b6;
+  height: 30px;
+  padding: 0 20px;
+  color: #fff;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  text-transform: uppercase;
+  font-weight: 700px;
+  font-size: 12px;
+  margin: 0 10px;
+} 
+
+.search-results {
+  margin-top: 20px;
+  padding: 20px;
+  background: #222;
+  border-radius: 10px;
+} 
+
+
+.search-dropdown {
+  position: absolute;
+  background: #222;
+  border: 1px solid #444;
+  border-radius: 5px;
+  max-height: 200px;
+  overflow-y: auto;
+  width: 250px;
+  z-index: 100;
+  display: none;
+}
+
+.search-dropdown .dropdown-item {
+  padding: 10px;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.search-dropdown .dropdown-item:hover {
+  background: #444;
+}
+
+.search-dropdown .no-results {
+  padding: 10px;
+  color: #aaa;
+  text-align: center;
+}
+
+
+
+.search-movie-card {
+  display: flex;
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #444;
+  border-radius: 8px;
+  background: #333;
+  color: #fff;
+}
+
+.image-wrapper-2 img {
+  width: 120px;
+  height: 180px;
+  object-fit: cover;
+  margin-right: 15px;
+  border-radius: 5px;
+}
+
+.movie-details {
+  font-size: 14px;
+}
+
+.movie-details h3 {
+  margin: 0 0 10px;
+  font-size: 18px;
+  color: #cb0cbf;
+}
+
+.no-results {
+  text-align: center;
+  font-size: 18px;
+  color: #ff6f61;
+}
+
+
+
+.prime-play-button {
+  position: absolute;
+  top: 80%;
+  left: 25%;
+  transform: translate(-50%, -50%);
+  background: #cb0cbf; /* Semi-transparent black */
+  border: none;
+  border-radius: 10%;
+  padding: 12px;
+  width: 90px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+}
+
+.prime-play-button:hover {
+  transform: translate(-50%, -50%) scale(1.1);
+  background: rgba(19, 128, 244, 0.8); /* Darker on hover */
+}
+
+.prime-play-icon {
+  width: 35px;
+  height: 35px;
+  fill: white; /* Icon color */
+  transition: fill 0.3s ease;
+}
+
+.prime-play-button:hover .prime-play-icon {
+  fill: #00a8e1; /* Prime Video blue on hover */
+}
+
+
+
+
+.carousel {
+  position: relative;
+  width: 100%;
+  overflow: hidden; 
+  max-width: 100%; 
+  margin: auto;
+}
+ 
+/* Ensure the carousel container stretches wide enough */
+.carousel-container {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  will-change: transform;
+  width: 100%; /* Ensure it fills the container */
+}
+
+/* carousal image style */
+.movie-details-container img{
+  overflow: hidden;
+  width: 100%;
+  height: 800px;
+}
+.movie-card {
+  flex: 0 0 100%; /* Each movie card takes 100% of the container width */
+  height: 500px; /* Fixed height for each movie card */
+  position: relative;
+}
+
+
+.image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%; /* Ensure the container takes up the full height */
+  overflow: hidden;
+}
+
+.movie-banner {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Ensures the full image is visible without cropping */
+  display: block;
+  margin-left: 350px;
+}
+
+/* Movie Info Styling */
+.movie-info {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  background: linear-gradient(90deg, rgb(0, 0, 0) 49%, rgba(5,4,5,0) 64%, rgba(0,0,0,0) 90%);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start; /* Align content to the left */
+}
+
+.movie-info h3 {
+  font-size: 60px;
+  margin-bottom: 10px;
+  color: rgb(9, 111, 212);
+  margin-left: 40px;
+}
+
+.movie-info p {
+  margin: 5px 0;
+  font-size: 20px;
+  margin-left: 50px;
+}
+
+/* Navigation Buttons */
+.prev,
+.next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 10px;
+  z-index: 10;
+  border-radius: 50%;
+}
+
+.prev:hover,
+.next:hover {
+  background-color: #333;
+}
+
+.prev {
+  left: 20px;
+}
+
+.next {
+  right: 20px;
+}
+
+

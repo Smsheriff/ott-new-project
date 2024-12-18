@@ -1,5 +1,6 @@
 {
-    "movies_slide":[
+
+  "movies_slide":[
       {
         "id": "1.1",
         "title": "Joker: Folie à Deux",
@@ -21,6 +22,7 @@
         "language": "English",
         "rating": 4.8,
         "bannerImage": "https://wallpapers.com/images/hd/titanic-cruising-at-night-zbknc6f8rl1vw09e.jpg"
+        
       },
       {
         "id": "1.3",
@@ -67,5 +69,6 @@
         "bannerImage": "https://wallpapercave.com/wp/fWnWpHj.jpg"
       }
     ]
+    
   }
   

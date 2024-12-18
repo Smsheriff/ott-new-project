@@ -150,6 +150,9 @@ if (valid) {
             btn.disabled = false;
             btn.innerText = 'Create an account';
 
+            // user name save to local storage
+             localStorage.setItem('username', name);
+
             // Optionally, redirect to another page
             window.location.href = "../html/home.html"; 
         })

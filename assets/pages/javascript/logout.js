@@ -19,3 +19,15 @@ function logoutUser() {
     sessionStorage.clear();
     window.location.href = "./Login.html";
 }
+
+// profile name code
+
+const profilename = document.getElementById("profile-username")
+const storedusername = localStorage.getItem("username");
+
+if(storedusername){
+    profilename.textContent = `Welcome, ${storedusername}!`;
+}
+else{
+    profilename.textContent = "Welcome, Guest!";
+}

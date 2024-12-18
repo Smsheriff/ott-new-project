@@ -1,3 +1,25 @@
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js';
+import { getFirestore, collection, setDoc, doc } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js';
+import { getAuth } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js';
+import { getAnalytics } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-analytics.js';
+
+// Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyCdlgHLDEcQb2IJhReeObkq6VhfPfnC-Uk",
+  authDomain: "movie-wave-c171b.firebaseapp.com",
+  projectId: "movie-wave-c171b",
+  storageBucket: "movie-wave-c171b.appspot.com",
+  messagingSenderId: "1073642279250",
+  appId: "1:1073642279250:web:aeaaaa670899a84434aa8b",
+  measurementId: "G-D4PR4H1M6N"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+const analytics = getAnalytics(app);
+
 // Fetch the movie data
 fetch('../json/carsoel.json')
   .then((response) => {
@@ -10,80 +32,28 @@ fetch('../json/carsoel.json')
     // Initialize a variable to store all movies
     const allMovies = data;
 
-    // Create the custom carousel based on the data
+    // Create the custom carousel and save movies to Firestore
     Object.keys(allMovies).forEach((category) => {
-      createCustomCarousel(category, allMovies[category]);
-    });
-
-    // Set up the search functionality
-    const searchInput = document.getElementById('search-input');
-    const dropdownBox = document.getElementById('dropdown-box');
-
-    searchInput.addEventListener('input', function () {
-      const query = searchInput.value.toLowerCase();
-
-      // Check if the query is a single letter for A-Z filtering
-      if (query.length === 1 && /^[a-z]$/.test(query)) {
-        // Filter movies whose title starts with the given letter
-        const filteredMovies = [];
-        Object.keys(allMovies).forEach((category) => {
-          const movies = allMovies[category].filter(movie =>
-            movie.title.toLowerCase().startsWith(query)
-          );
-
-          filteredMovies.push(...movies);
-        });
-
-        // Display the filtered movies in the dropdown
-        dropdownBox.innerHTML = '';
-        filteredMovies.forEach((movie) => {
-          const movieItem = document.createElement('div');
-          movieItem.textContent = movie.title;
-          movieItem.classList.add('search-item');
-
-          // Add event listener to navigate to the detailed page on click
-          movieItem.addEventListener('click', () => {
-            window.location.href = `/OTT-Project/assets/pages/html/moviepage.html`; // Redirect to detailed movie page
-          });
-
-          dropdownBox.appendChild(movieItem);
-        });
-
-        // Show or hide the dropdown based on results
-        dropdownBox.style.display = filteredMovies.length > 0 ? 'block' : 'none';
-      } else if (query.length > 1) {
-        // Handle normal search for longer queries
-        const filteredMovies = [];
-        Object.keys(allMovies).forEach((category) => {
-          const movies = allMovies[category].filter(movie =>
-            movie.title.toLowerCase().includes(query) || movie.description.toLowerCase().includes(query)
-          );
-
-          filteredMovies.push(...movies);
-        });
-
-        dropdownBox.innerHTML = '';
-        filteredMovies.forEach((movie) => {
-          const movieItem = document.createElement('div');
-          movieItem.textContent = movie.title;
-          movieItem.classList.add('search-item');
-
-          movieItem.addEventListener('click', () => {
-            window.location.href = `/OTT-Project/assets/pages/html/moviepage.html`;
-          });
-
-          dropdownBox.appendChild(movieItem);
-        });
-
-        dropdownBox.style.display = filteredMovies.length > 0 ? 'block' : 'none';
-      } else {
-        // Hide dropdown when input is empty
-        dropdownBox.innerHTML = '';
-        dropdownBox.style.display = 'none';
-      }
+      const movies = allMovies[category];
+      createCustomCarousel(category, movies);
+      saveMoviesToFirestore(category, movies); // Save movies in Firestore
     });
   })
   .catch((error) => console.error('Error loading JSON:', error.message));
+
+// Function to save movies to Firestore
+async function saveMoviesToFirestore(categoryName, movies) {
+  const collectionRef = collection(db, categoryName); // Create collection for each category
+  try {
+    for (const movie of movies) {
+      const docRef = doc(collectionRef, movie.id); // Use movie ID as document ID
+      await setDoc(docRef, movie);
+      console.log(`Movie "${movie.title}" saved to Firestore in category "${categoryName}".`);
+    }
+  } catch (error) {
+    console.error(`Error saving movies to Firestore for category "${categoryName}":`, error);
+  }
+}
 
 // Function to create the carousel for each category
 function createCustomCarousel(categoryName, movies) {
@@ -111,7 +81,7 @@ function createCustomCarousel(categoryName, movies) {
     movieCard.classList.add('custom-movie-card');
     movieCard.innerHTML = `
       <div class="image-wrapper-1">
-        <img src="${movie.bannerImage}" alt="${movie.title}">
+        <img src="${movie.bannerImage}" style="width:100%;" alt="${movie.title}">
         <div class="movie-details">
           <h3>${movie.title}</h3>
           <p>${movie.description}</p>
@@ -127,9 +97,7 @@ function createCustomCarousel(categoryName, movies) {
     carouselContainer.appendChild(movieCard);
 
     // Add an event listener to redirect to a big page when the movie card is clicked
-    movieCard.addEventListener('click', () => {
-      window.location.href = `/movie-details.html?id=${movie.id}`; // Navigate to the movie details page
-    });
+
   });
 
   const prevButton = document.createElement('button');
@@ -151,17 +119,34 @@ function createCustomCarousel(categoryName, movies) {
     carouselContainer.style.transform = `translateX(${offset}px)`;
   };
 
+  const flattenedMovies = Array.isArray(movies[0]) ? movies.flat() : movies;
+
   // Event listener for the "previous" button
   prevButton.addEventListener('click', () => {
     currentIndex = Math.max(0, currentIndex - 1);
     updateCarousel();
+    toggleButtons();
   });
 
   // Event listener for the "next" button
   nextButton.addEventListener('click', () => {
-    currentIndex = Math.min(currentIndex + 1, movies.length - 1);  // Fixed length check
+    currentIndex = Math.min(currentIndex + 1, flattenedMovies.length - 5); // Use the flattened array's length
     updateCarousel();
+    toggleButtons();
   });
+
+  // Function to toggle button visibility
+  function toggleButtons() {
+    // Hide the left button if at the first movie
+    prevButton.style.display = currentIndex === 0 ? 'none' : 'block';
+
+    // Hide the right button if at the last visible set of movies
+    nextButton.style.display =
+      currentIndex === flattenedMovies.length - 5 ? 'none' : 'block';
+  }
+
+  // Initial call to set button visibility
+  toggleButtons();
 
   // Update carousel position on window resize
   window.addEventListener('resize', updateCarousel);
@@ -173,42 +158,92 @@ function createCustomCarousel(categoryName, movies) {
 
 
 
-// Grab the icon and dropdown elements
-const searchIcon = document.getElementById('search-icon');
-const dropdownBox = document.getElementById('dropdown-box');
 
-// Toggle dropdown visibility and adjust position dynamically
-searchIcon.addEventListener('click', () => {
-  const isVisible = dropdownBox.style.display === 'block';
 
-  if (!isVisible) {
-    const iconRect = searchIcon.getBoundingClientRect(); // Get position of the icon
-    const dropdownWidth = dropdownBox.offsetWidth;
 
-    // Calculate left position to avoid overflowing to the right
-    let leftPosition = iconRect.left + window.scrollX;
 
-    // Move the dropdown to the left by a fixed amount (e.g., 20px)
-    leftPosition -= 650;  // Adjust this value to your preference
 
-    // If it overflows to the right, move it left
-    if (leftPosition + dropdownWidth > window.innerWidth) {
-      leftPosition = window.innerWidth - dropdownWidth - 10;
+
+
+
+
+
+let allMoviesData = {}; // To store all movies from JSON
+
+// Fetch movies from JSON
+fetch('../json/carsoel.json')
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
+    return response.json();
+  })
+  .then((data) => {
+    allMoviesData = data; // Store the fetched data globally
+  })
+  .catch((error) => console.error('Error loading JSON:', error.message));
 
-    // Update the dropdown position
-    dropdownBox.style.left = `${leftPosition}px`;
-    dropdownBox.style.top = `${iconRect.bottom + window.scrollY}px`;
+// DOM Elements
+const searchBox = document.getElementById('search-box');
+const searchBtn = document.getElementById('search-btn');
+const searchDropdown = document.getElementById('search-dropdown');
 
-    dropdownBox.style.display = 'block'; // Show the dropdown
+// Event listener for search box input
+searchBox.addEventListener('input', () => {
+  const searchTerm = searchBox.value.toLowerCase().trim();
+  searchDropdown.innerHTML = ''; // Clear previous results
+  searchDropdown.style.display = 'none';
+
+  if (searchTerm === '') return; // Exit if the input is empty
+
+  // Find matching movies
+  const matchedMovies = [];
+  Object.keys(allMoviesData).forEach((category) => {
+    const matches = allMoviesData[category].filter((movie) =>
+      movie.title.toLowerCase().startsWith(searchTerm)
+    );
+    matchedMovies.push(...matches);
+  });
+
+  // Display matched movies
+  if (matchedMovies.length > 0) {
+    matchedMovies.forEach((movie) => {
+      const item = document.createElement('div');
+      item.classList.add('dropdown-item');
+      item.textContent = movie.title;
+      item.addEventListener('click', () => {
+        // Redirect to movie details page
+        window.location.href = `/assets/pages/html/moviepage.html?id=${movie.id}`;
+      });
+      searchDropdown.appendChild(item);
+    });
+    searchDropdown.style.display = 'block';
   } else {
-    dropdownBox.style.display = 'none'; // Hide the dropdown
+    const noResults = document.createElement('div');
+    noResults.classList.add('no-results');
+    noResults.textContent = 'No movies found.';
+    searchDropdown.appendChild(noResults);
+    searchDropdown.style.display = 'block';
   }
 });
 
-// Close dropdown when clicking outside
-document.addEventListener('click', (e) => {
-  if (!e.target.closest('.search-container')) {
-    dropdownBox.style.display = 'none';
+// Event listener for the search button
+searchBtn.addEventListener('click', () => {
+  const searchTerm = searchBox.value.trim(); // Get the search term
+  if (searchTerm) {
+    // Redirect to search-results page with the query parameter
+    window.location.href = `/assets/pages/html/moviepage.html?query=${encodeURIComponent(
+      searchTerm
+    )}`;
   }
 });
+
+// Hide the dropdown when clicking outside
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.right-container')) {
+    searchDropdown.style.display = 'none';
+  }
+});
+
+
+

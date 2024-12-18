@@ -8,35 +8,28 @@
     <link rel="stylesheet" href="../css/carsoel.css">
     <link rel="stylesheet" href="../css/logout.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    
+    <title>MOVIE WAVE</title>
 </head>
 <body>
     
 
     <nav class="navbar">
-        <div class="nav-content">
-            <h1 id="heading">MOVIES WAVE</h1>
-            <div id="whole">
-                <div class="search-container">
-                    <div class="search-icon" id="search-icon">
-                      <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24" fill="white">
-                        <path d="M796 936 528 668q-27 21-59 31t-67 10q-108 0-184-76T142 448q0-108 76-184t184-76q108 0 184 76t76 184q0 36-10 67t-31 59l268 268-83 83ZM384 640q75 0 127.5-52.5T564 460q0-75-52.5-127.5T384 280q-75 0-127.5 52.5T204 460q0 75 52.5 127.5T384 640Z"/>
-                      </svg>
-                    </div>
-                    <div class="dropdown-box" id="dropdown-box">
-                      <input type="text" id="search-input" placeholder="Search movies..." />
-                      <div id="search-suggestions" class="suggestions-dropdown"></div>
-                    </div>
-                  </div>
-                  
-                  
-                <div class="profile-container">
-                    <img src="../../images/my-profile.png" alt="Profile" id="profile-logo" class="profile-logo" />
+      <img src="../../images/logo.png" alt="logo-img" class="heading">
+      <div class="right-container">
+        <input type="text" id="search-box" class="search-box" placeholder="Search" autocomplete="off">
+        <button id="search-btn">Search</button>
+        <div id="search-dropdown" class="search-dropdown"></div>
+      </div>
+               
+                  <div class="profile-container">
+                    <img src="../../images/my-profile.png" alt="Profile-img" id="profile-logo" class="profile-logo" />
                     <div id="dropdown-menu" class="dropdown-menu">
-                        <div class="dropdown-item">Profile</div>
+                        <div class="dropdown-item" id="profile-username">Username</div>
                         <div class="dropdown-item" onclick="logoutUser()">Logout</div>
                     </div>
                 </div>
+                  
+               
             </div>
         </div>
     </nav>
@@ -50,10 +43,8 @@
 
     <div id="custom-carousel-wrapper"></div>
 
-    
-  <script src="../javascript/home.js"></script>
-  <script src="../javascript/carsoel.js"></script>
+  <script src="../javascript/home.js" type="module"></script>
+  <script src="../javascript/carsoel.js" type="module"></script>
   <script src="../javascript/logout.js"></script>
-
 </body>
 </html>

@@ -58,7 +58,7 @@
   
   .image-wrapper-1 img {
     width: 85%;
-    height: 95%;
+    height: 100%;
     object-fit: cover; /* Ensures the image fits nicely */
     transition: transform 0.3s ease;
   }
