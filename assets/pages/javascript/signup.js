@@ -150,9 +150,6 @@ if (valid) {
             btn.disabled = false;
             btn.innerText = 'Create an account';
 
-            // user name save to local storage
-             localStorage.setItem('username', name);
-
             // Optionally, redirect to another page
             window.location.href = "../html/home.html"; 
         })
@@ -214,3 +211,13 @@ window.history.pushState(null, null, window.location.href);
 window.addEventListener('popstate', function () {
     window.history.pushState(null, null, window.location.href);
 });
+
+ 
+
+btn.addEventListener("click" , () => {
+    const username = name.value.trim();
+    if(username){
+        localStorage.setItem("username",username);
+        alert("is log")
+    }
+})
