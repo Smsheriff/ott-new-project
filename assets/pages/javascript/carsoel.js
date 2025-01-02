@@ -85,19 +85,17 @@ function createCustomCarousel(categoryName, movies) {
         <div class="movie-details">
           <h3>${movie.title}</h3>
           <p>${movie.description}</p>
-          <p><strong>Genre:</strong> ${movie.genre}</p>
-          <p><strong>Release Date:</strong> ${movie.releaseDate}</p>
-          <p><strong>Duration:</strong> ${movie.duration} mins</p>
-          <p><strong>Language:</strong> ${movie.language}</p>
-          <p><strong>Rating:</strong> ⭐ ${movie.rating}</p>
-          <button class="watch-button">Watch</button>
+          <button class="watch-button" data-movie-id="${movie.id}">Watch</button>
         </div>
       </div>
     `;
     carouselContainer.appendChild(movieCard);
 
-    // Add an event listener to redirect to a big page when the movie card is clicked
-
+    // Add event listener to the watch button
+    movieCard.querySelector('.watch-button').addEventListener('click', () => {
+      localStorage.setItem('selectedMovie', JSON.stringify(movie)); // Save movie details in local storage
+      window.location.href = 'details.html'; // Redirect to details page
+    });
   });
 
   const prevButton = document.createElement('button');

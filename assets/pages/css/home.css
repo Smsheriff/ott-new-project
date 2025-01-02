@@ -116,8 +116,6 @@ body {
   text-align: center;
 }
 
-
-
 .search-movie-card {
   display: flex;
   margin-bottom: 20px;
@@ -146,11 +144,6 @@ body {
   color: #cb0cbf;
 }
 
-.no-results {
-  text-align: center;
-  font-size: 18px;
-  color: #ff6f61;
-}
 
 
 
