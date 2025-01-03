@@ -218,6 +218,5 @@ btn.addEventListener("click" , () => {
     const username = name.value.trim();
     if(username){
         localStorage.setItem("username",username);
-        alert("is log")
     }
 })
