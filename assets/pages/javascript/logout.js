@@ -26,7 +26,7 @@ const profilename = document.getElementById("profile-username")
 const storedusername = localStorage.getItem("username");
 
 if(storedusername){
-    profilename.textContent = `Welcome, ${storedusername}!`;
+    profilename.textContent = `Welcome, ${storedusername} !`;
 }
 else{
     profilename.textContent = "Welcome, Guest!";

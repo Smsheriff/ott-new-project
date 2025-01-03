@@ -166,7 +166,90 @@ function createCustomCarousel(categoryName, movies) {
 
 
 
+// let allMoviesData = {}; // To store all movies from JSON
+
+// // Fetch movies from JSON
+// fetch('../json/carsoel.json')
+//   .then((response) => {
+//     if (!response.ok) {
+//       throw new Error(`HTTP error! status: ${response.status}`);
+//     }
+//     return response.json();
+//   })
+//   .then((data) => {
+//     allMoviesData = data; // Store the fetched data globally
+//   })
+//   .catch((error) => console.error('Error loading JSON:', error.message));
+
+// // DOM Elements
+// const searchBox = document.getElementById('search-box');
+// const searchBtn = document.getElementById('search-btn');
+// const searchDropdown = document.getElementById('search-dropdown');
+
+// // Event listener for search box input
+// searchBox.addEventListener('input', () => {
+//   const searchTerm = searchBox.value.toLowerCase().trim();
+//   searchDropdown.innerHTML = ''; // Clear previous results
+//   searchDropdown.style.display = 'none';
+
+//   if (searchTerm === '') return; // Exit if the input is empty
+
+//   // Find matching movies
+//   const matchedMovies = [];
+//   Object.keys(allMoviesData).forEach((category) => {
+//     const matches = allMoviesData[category].filter((movie) =>
+//       movie.title.toLowerCase().startsWith(searchTerm)
+//     );
+//     matchedMovies.push(...matches);
+//   });
+
+//   // Display matched movies
+//   if (matchedMovies.length > 0) {
+//     matchedMovies.forEach((movie) => {
+//       const item = document.createElement('div');
+//       item.classList.add('dropdown-item');
+//       item.textContent = movie.title;
+//       item.addEventListener('click', () => {
+//         // Redirect to movie details page
+//         window.location.href = `/assets/pages/html/moviepage.html?id=${movie.id}`;
+//       });
+//       searchDropdown.appendChild(item);
+//     });
+//     searchDropdown.style.display = 'block';
+//   } else {
+//     const noResults = document.createElement('div');
+//     noResults.classList.add('no-results');
+//     noResults.textContent = 'No movies found.';
+//     searchDropdown.appendChild(noResults);
+//     searchDropdown.style.display = 'block';
+//   }
+// });
+
+// // Event listener for the search button
+// searchBtn.addEventListener('click', () => {
+//   const searchTerm = searchBox.value.trim(); // Get the search term
+//   if (searchTerm) {
+//     // Redirect to search-results page with the query parameter
+//     window.location.href = `/assets/pages/html/moviepage.html?query=${encodeURIComponent(
+//       searchTerm
+//     )}`;
+//   }
+// });
+
+// // Hide the dropdown when clicking outside
+// document.addEventListener('click', (e) => {
+//   if (!e.target.closest('.right-container')) {
+//     searchDropdown.style.display = 'none';
+//   }
+// });
+
+
+
+
+
+// carousel.js
 let allMoviesData = {}; // To store all movies from JSON
+
 
 // Fetch movies from JSON
 fetch('../json/carsoel.json')
@@ -177,7 +260,8 @@ fetch('../json/carsoel.json')
     return response.json();
   })
   .then((data) => {
-    allMoviesData = data; // Store the fetched data globally
+    allMoviesData = data;
+    console.log(allMoviesData); // Store the fetched data globally
   })
   .catch((error) => console.error('Error loading JSON:', error.message));
 
@@ -202,7 +286,8 @@ searchBox.addEventListener('input', () => {
     );
     matchedMovies.push(...matches);
   });
-
+ 
+  
   // Display matched movies
   if (matchedMovies.length > 0) {
     matchedMovies.forEach((movie) => {
@@ -210,8 +295,9 @@ searchBox.addEventListener('input', () => {
       item.classList.add('dropdown-item');
       item.textContent = movie.title;
       item.addEventListener('click', () => {
-        // Redirect to movie details page
-        window.location.href = `/assets/pages/html/moviepage.html?id=${movie.id}`;
+        localStorage.setItem('selectedMovie', JSON.stringify(movie)); 
+
+        window.location.href = `/assets/pages/html/details.html`;
       });
       searchDropdown.appendChild(item);
     });
@@ -225,16 +311,7 @@ searchBox.addEventListener('input', () => {
   }
 });
 
-// Event listener for the search button
-searchBtn.addEventListener('click', () => {
-  const searchTerm = searchBox.value.trim(); // Get the search term
-  if (searchTerm) {
-    // Redirect to search-results page with the query parameter
-    window.location.href = `/assets/pages/html/moviepage.html?query=${encodeURIComponent(
-      searchTerm
-    )}`;
-  }
-});
+
 
 // Hide the dropdown when clicking outside
 document.addEventListener('click', (e) => {
