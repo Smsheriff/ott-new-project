@@ -121,4 +121,5 @@ form.addEventListener("submit", async (event) => {
         btn.disabled = false;
         btn.innerText = 'Login';
     }
+    localStorage.setItem('mail',email.value)
 });

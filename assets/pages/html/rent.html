@@ -1,41 +1,3 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rent Movie</title>
-  <link rel="stylesheet" href="../css/rent.css">
-</head>
-<body>
-  <div class="rent-container">
-    <div id="rent-movie-details"></div>
-    <form id="payment-form">
-      <label for="duration">Select rental duration:</label>
-      <select id="duration">
-        <option value="1">1 Day - $3.99</option>
-        <option value="7">7 Days - $7.99</option>
-      </select>
-      <p id="price">Price: $0.00</p>
-
-      <h2>Credit Card Information</h2>
-      <label for="card-number">Card Number:</label>
-      <input type="text" id="card-number" placeholder="Enter card number" required>
-
-      <label for="expiry-date">Expiry Date (MM/YY):</label>
-      <input type="text" id="expiry-date" placeholder="MM/YY" required>
-
-      <label for="cvv">CVV:</label>
-      <input type="text" id="cvv" placeholder="Enter CVV" required>
-
-      <button type="submit">Confirm Rental</button>
-    </form>
-  </div>
-  <script src="../js/rent.js"></script>
-</body>
-</html> -->
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -49,88 +11,37 @@
     <h1 id="movie-title">Rent Movie</h1>
     <form id="rental-form">
       <label for="duration">Select rental duration:</label>
-      <select id="duration" required>
+      <select id="duration" >
         <option value="">Choose a duration</option>
         <option value="1">1 Day</option>
         <option value="3">3 Days</option>
         <option value="7">7 Days</option>
       </select>
+      <span class="error" id="duration-error"></span>
 
-      <p id="price">Price: $0.00</p>
+      <p id="price">Price: $299</p>
 
       <h3>Credit Card Information</h3>
       <label for="card-number">Card Number:</label>
-      <input type="text" id="card-number" placeholder="Enter card number" required />
+      <input type="text" id="card-number" placeholder="Enter card number"  />
+      <span class="error" id="card-error"></span>
 
       <label for="expiry">Expiry Date (MM/YY):</label>
-      <input type="text" id="expiry" placeholder="MM/YY" required />
+      <input type="text" id="expiry" placeholder="MM/YY"  />
+      <span class="error" id="expiry-error"></span>
 
       <label for="cvv">CVV:</label>
-      <input type="text" id="cvv" placeholder="Enter CVV" required />
+      <input type="text" id="cvv" placeholder="Enter CVV"  />
+      <span class="error" id="cvv-error"></span>
 
       <button type="submit" id="confirm-btn">Confirm Rental</button>
     </form>
   </div>
 
+  <!-- Add EmailJS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
   <!-- Firebase SDK -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
-    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
-    import { getAuth } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-analytics.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyCdlgHLDEcQb2IJhReeObkq6VhfPfnC-Uk",
-      authDomain: "movie-wave-c171b.firebaseapp.com",
-      projectId: "movie-wave-c171b",
-      storageBucket: "movie-wave-c171b.appspot.com",
-      messagingSenderId: "1073642279250",
-      appId: "1:1073642279250:web:aeaaaa670899a84434aa8b",
-      measurementId: "G-D4PR4H1M6N"
-    };
-
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-    const auth = getAuth(app);
-    const analytics = getAnalytics(app);
-
-    document.getElementById('rental-form').addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      const duration = document.getElementById('duration').value;
-      const cardNumber = document.getElementById('card-number').value;
-      const expiry = document.getElementById('expiry').value;
-      const cvv = document.getElementById('cvv').value;
-      const email = 'user@example.com'; // Replace with user's email fetched dynamically
-
-      try {
-        // Store transaction data in Firestore
-        await addDoc(collection(db, 'transactions'), {
-          email: email,
-          duration: duration,
-          price: calculatePrice(duration),
-          status: 'Processing',
-          timestamp: serverTimestamp()
-        });
-
-        alert('Rental confirmed! Check your email for confirmation.');
-        window.location.href = 'processing.html'; // Redirect to processing page
-
-      } catch (error) {
-        console.error('Error processing rental:', error);
-        alert('Error processing rental. Please try again.');
-      }
-    });
-
-    function calculatePrice(duration) {
-      switch (duration) {
-        case '1': return 2.99;
-        case '3': return 5.99;
-        case '7': return 9.99;
-        default: return 0.00;
-      }
-    }
-  </script>
+  <script type="module" src="../javascript/rent.js"></script>
 </body>
 </html>

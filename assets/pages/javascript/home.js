@@ -185,3 +185,4 @@ if (navbar) {
     container.style.transform = `translateX(${offset}px)`; 
   }
 }
+console.log(localStorage.getItem('mail'))
