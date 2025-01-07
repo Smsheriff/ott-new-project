@@ -101,7 +101,7 @@ form.addEventListener("submit", async (event) => {
         console.log('Login successful:', user);
 
         // Redirect to a different page (e.g., dashboard or home)
-        window.location.href = "../html/home.html"; // Change this to the page you want to redirect to
+        window.location.href = "../html/home.html"; 
     } catch (error) {
         const errorCode = error.code;
         const errorMessage = error.message;

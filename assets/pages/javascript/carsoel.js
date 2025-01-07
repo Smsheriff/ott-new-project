@@ -36,17 +36,17 @@ fetch('../json/carsoel.json')
     Object.keys(allMovies).forEach((category) => {
       const movies = allMovies[category];
       createCustomCarousel(category, movies);
-      saveMoviesToFirestore(category, movies); // Save movies in Firestore
+      saveMoviesToFirestore(category, movies); 
     });
   })
   .catch((error) => console.error('Error loading JSON:', error.message));
 
 // Function to save movies to Firestore
 async function saveMoviesToFirestore(categoryName, movies) {
-  const collectionRef = collection(db, categoryName); // Create collection for each category
+  const collectionRef = collection(db, categoryName);
   try {
     for (const movie of movies) {
-      const docRef = doc(collectionRef, movie.id); // Use movie ID as document ID
+      const docRef = doc(collectionRef, movie.id);
       await setDoc(docRef, movie);
       console.log(`Movie "${movie.title}" saved to Firestore in category "${categoryName}".`);
     }
@@ -86,6 +86,7 @@ function createCustomCarousel(categoryName, movies) {
           <h3>${movie.title}</h3>
           <p>${movie.description}</p>
           <button class="watch-button" data-movie-id="${movie.id}">Watch</button>
+          <button class="watchlist-btn" data-movie-id="${movie.id}"><i class="fa-solid fa-plus"></i></button>
         </div>
       </div>
     `;
@@ -95,6 +96,21 @@ function createCustomCarousel(categoryName, movies) {
     movieCard.querySelector('.watch-button').addEventListener('click', () => {
       localStorage.setItem('selectedMovie', JSON.stringify(movie)); // Save movie details in local storage
       window.location.href = 'details.html'; // Redirect to details page
+    });
+
+    // Add event listener for the watchlist button
+    movieCard.querySelector('.watchlist-btn').addEventListener('click', () => {
+      // Fetch watchlist from localStorage
+      let watchlist = JSON.parse(localStorage.getItem('watchlist')) || [];
+
+      // Check if movie is already in watchlist
+      if (!watchlist.some((m) => m.id === movie.id)) {
+        watchlist.push(movie); // Add movie to watchlist
+        localStorage.setItem('watchlist', JSON.stringify(watchlist));
+      }
+
+      // Redirect to watchlist page
+      window.location.href = '../html/watchlist.html';
     });
   });
 
@@ -128,22 +144,17 @@ function createCustomCarousel(categoryName, movies) {
 
   // Event listener for the "next" button
   nextButton.addEventListener('click', () => {
-    currentIndex = Math.min(currentIndex + 1, flattenedMovies.length - 5); // Use the flattened array's length
+    currentIndex = Math.min(currentIndex + 1, flattenedMovies.length - 5); 
     updateCarousel();
     toggleButtons();
   });
 
   // Function to toggle button visibility
   function toggleButtons() {
-    // Hide the left button if at the first movie
     prevButton.style.display = currentIndex === 0 ? 'none' : 'block';
-
-    // Hide the right button if at the last visible set of movies
     nextButton.style.display =
       currentIndex === flattenedMovies.length - 5 ? 'none' : 'block';
   }
-
-  // Initial call to set button visibility
   toggleButtons();
 
   // Update carousel position on window resize
@@ -157,101 +168,8 @@ function createCustomCarousel(categoryName, movies) {
 
 
 
-
-
-
-
-
-
-
-
-
-// let allMoviesData = {}; // To store all movies from JSON
-
-// // Fetch movies from JSON
-// fetch('../json/carsoel.json')
-//   .then((response) => {
-//     if (!response.ok) {
-//       throw new Error(`HTTP error! status: ${response.status}`);
-//     }
-//     return response.json();
-//   })
-//   .then((data) => {
-//     allMoviesData = data; // Store the fetched data globally
-//   })
-//   .catch((error) => console.error('Error loading JSON:', error.message));
-
-// // DOM Elements
-// const searchBox = document.getElementById('search-box');
-// const searchBtn = document.getElementById('search-btn');
-// const searchDropdown = document.getElementById('search-dropdown');
-
-// // Event listener for search box input
-// searchBox.addEventListener('input', () => {
-//   const searchTerm = searchBox.value.toLowerCase().trim();
-//   searchDropdown.innerHTML = ''; // Clear previous results
-//   searchDropdown.style.display = 'none';
-
-//   if (searchTerm === '') return; // Exit if the input is empty
-
-//   // Find matching movies
-//   const matchedMovies = [];
-//   Object.keys(allMoviesData).forEach((category) => {
-//     const matches = allMoviesData[category].filter((movie) =>
-//       movie.title.toLowerCase().startsWith(searchTerm)
-//     );
-//     matchedMovies.push(...matches);
-//   });
-
-//   // Display matched movies
-//   if (matchedMovies.length > 0) {
-//     matchedMovies.forEach((movie) => {
-//       const item = document.createElement('div');
-//       item.classList.add('dropdown-item');
-//       item.textContent = movie.title;
-//       item.addEventListener('click', () => {
-//         // Redirect to movie details page
-//         window.location.href = `/assets/pages/html/moviepage.html?id=${movie.id}`;
-//       });
-//       searchDropdown.appendChild(item);
-//     });
-//     searchDropdown.style.display = 'block';
-//   } else {
-//     const noResults = document.createElement('div');
-//     noResults.classList.add('no-results');
-//     noResults.textContent = 'No movies found.';
-//     searchDropdown.appendChild(noResults);
-//     searchDropdown.style.display = 'block';
-//   }
-// });
-
-// // Event listener for the search button
-// searchBtn.addEventListener('click', () => {
-//   const searchTerm = searchBox.value.trim(); // Get the search term
-//   if (searchTerm) {
-//     // Redirect to search-results page with the query parameter
-//     window.location.href = `/assets/pages/html/moviepage.html?query=${encodeURIComponent(
-//       searchTerm
-//     )}`;
-//   }
-// });
-
-// // Hide the dropdown when clicking outside
-// document.addEventListener('click', (e) => {
-//   if (!e.target.closest('.right-container')) {
-//     searchDropdown.style.display = 'none';
-//   }
-// });
-
-
-
-
-
-// carousel.js
-let allMoviesData = {}; // To store all movies from JSON
-
-
-// Fetch movies from JSON
+// To store all movies from JSON
+let allMoviesData = {}; 
 fetch('../json/carsoel.json')
   .then((response) => {
     if (!response.ok) {
@@ -261,7 +179,7 @@ fetch('../json/carsoel.json')
   })
   .then((data) => {
     allMoviesData = data;
-    console.log(allMoviesData); // Store the fetched data globally
+    console.log(allMoviesData);
   })
   .catch((error) => console.error('Error loading JSON:', error.message));
 
@@ -276,7 +194,7 @@ searchBox.addEventListener('input', () => {
   searchDropdown.innerHTML = ''; // Clear previous results
   searchDropdown.style.display = 'none';
 
-  if (searchTerm === '') return; // Exit if the input is empty
+  if (searchTerm === '') return;
 
   // Find matching movies
   const matchedMovies = [];
@@ -287,7 +205,6 @@ searchBox.addEventListener('input', () => {
     matchedMovies.push(...matches);
   });
  
-  
   // Display matched movies
   if (matchedMovies.length > 0) {
     matchedMovies.forEach((movie) => {
@@ -310,8 +227,6 @@ searchBox.addEventListener('input', () => {
     searchDropdown.style.display = 'block';
   }
 });
-
-
 
 // Hide the dropdown when clicking outside
 document.addEventListener('click', (e) => {

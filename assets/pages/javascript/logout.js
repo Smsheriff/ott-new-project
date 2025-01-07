@@ -21,7 +21,6 @@ function logoutUser() {
 }
 
 // profile name code
-
 const profilename = document.getElementById("profile-username")
 const storedusername = localStorage.getItem("username");
 

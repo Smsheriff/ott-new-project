@@ -44,7 +44,7 @@ async function saveMoviesToFirestore(movies) {
   const moviesRef = collection(db, 'movies_slide');
   try {
     for (const movie of movies) {
-      const movieDocRef = doc(moviesRef, movie.id); // Use movie ID as the document ID
+      const movieDocRef = doc(moviesRef, movie.id); 
       await setDoc(movieDocRef, movie);
       console.log(`Movie ${movie.title} saved successfully.`);
     }
@@ -69,14 +69,7 @@ if (navbar) {
 
 
 
-
-
-
-
-
-
-
-      function initializeCarousel(movies) {
+  function initializeCarousel(movies) {
   const carouselContainer = document.querySelector('.carousel-container');
   const prevButton = document.getElementById('prev');
   const nextButton = document.getElementById('next');
@@ -86,7 +79,7 @@ if (navbar) {
     return;
   }
 
-  let currentIndex = 0; // Start from the first slide
+  let currentIndex = 0; 
   let isAnimating = false;
 
   // Create and load movie cards into the carousel
@@ -145,11 +138,6 @@ if (navbar) {
         <p><strong>Duration:</strong> ${movie.duration} mins</p>
         <p><strong>Language:</strong> ${movie.language}</p>
         <p><strong>Rating:</strong> ⭐ ${movie.rating}</p>
-        <button class="prime-play-button" onclick="playTrailer('${movie.trailerUrl}')">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="prime-play-icon">
-            <path d="M8 5v14l11-7z" fill="currentColor"></path>
-          </svg> Play
-        </button>
       </div>
    
     `;
@@ -164,15 +152,15 @@ if (navbar) {
 
     setTimeout(() => {
       if (currentIndex === totalMovies) {
-        currentIndex = 0; // Reset to the first slide
-        container.style.transition = 'none'; // Disable transition for instant move
+        currentIndex = 0;
+        container.style.transition = 'none'; 
         updateCarousel(currentIndex, container);
         setTimeout(() => {
-          container.style.transition = 'transform 0.5s ease-in-out'; // Re-enable transition
+          container.style.transition = 'transform 0.5s ease-in-out';
         });
       }
       isAnimating = false;
-    }, 500); // Match the transition duration
+    }, 500); 
   }
 
   function moveToPrev(totalMovies, container) {
@@ -180,11 +168,11 @@ if (navbar) {
     isAnimating = true;
     currentIndex--;
     if (currentIndex < 0) {
-      currentIndex = totalMovies - 1; // Move to the last slide
-      container.style.transition = 'none'; // Disable transition for instant move
+      currentIndex = totalMovies - 1;
+      container.style.transition = 'none';
       updateCarousel(currentIndex, container);
       setTimeout(() => {
-        container.style.transition = 'transform 0.5s ease-in-out'; // Re-enable transition
+        container.style.transition = 'transform 0.5s ease-in-out';
       });
     }
     updateCarousel(currentIndex, container);
@@ -192,8 +180,8 @@ if (navbar) {
   }
 
   function updateCarousel(index, container) {
-    const slideWidth = container.firstElementChild.offsetWidth; // Get dynamic slide width
-    const offset = -index * slideWidth; // Calculate offset
-    container.style.transform = `translateX(${offset}px)`; // Apply offset
+    const slideWidth = container.firstElementChild.offsetWidth;
+    const offset = -index * slideWidth;
+    container.style.transform = `translateX(${offset}px)`; 
   }
 }
