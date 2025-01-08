@@ -7,6 +7,12 @@
   <link rel="stylesheet" href="../css/rent.css" />
 </head>
 <body>
+  <button id="back-btn" onclick="window.history.back()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left">
+      <polyline points="12 19 5 12 12 5"></polyline>
+      <line x1="19" y1="12" x2="5" y2="12"></line>
+    </svg>back
+  </button>
   <div class="rent-container">
     <h1 id="movie-title">Rent Movie</h1>
     <form id="rental-form">
@@ -19,7 +25,7 @@
       </select>
       <span class="error" id="duration-error"></span>
 
-      <p id="price">Price: $299</p>
+      <p id="price">Price: 299</p>
 
       <h3>Credit Card Information</h3>
       <label for="card-number">Card Number:</label>
