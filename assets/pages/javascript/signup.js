@@ -151,7 +151,8 @@ if (valid) {
             btn.innerText = 'Create an account';
 
             // Optionally, redirect to another page
-            window.location.href = "../html/home.html"; 
+            window.location.href = "../html/Login.html"; 
+            // localStorage.setItem('mail',emailValue)
         })
         .catch((error) => {
             const errorCode = error.code;
