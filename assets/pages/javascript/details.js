@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const selectedMovie = JSON.parse(localStorage.getItem('selectedMovie'));
   localStorage.setItem('moviename', selectedMovie.title)
   
-
+  const category =  localStorage.getItem("category")
   // Check if movie details are available
   if (!selectedMovie) {
     movieDetailsSection.innerHTML = `<p>No movie details found. Please select a movie from the main page.</p>`;
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <p><strong>Language:</strong> ${selectedMovie.language}</p>
         <p><strong>Rating:</strong> ⭐ ${selectedMovie.rating}</p>
         <button id="watch-now-btn">Rent Now</button>
-         <button id="watch-trailer-btn">Watch Trailer</button>
+         <button id="watch-trailer-btn"  >Watch Trailer</button>
       </div>
     </div>
   `;
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const watchTrailerBtn = document.getElementById('watch-trailer-btn');
 watchTrailerBtn.addEventListener('click', () => {
-  // Redirect to the trailer page
+ 
   window.location.href = '../html/trailer.html';
 });
 });

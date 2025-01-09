@@ -94,7 +94,10 @@ function createCustomCarousel(categoryName, movies) {
 
     // Add event listener to the watch button
     movieCard.querySelector('.watch-button').addEventListener('click', () => {
-      localStorage.setItem('selectedMovie', JSON.stringify(movie)); // Save movie details in local storage
+      localStorage.setItem('selectedMovie', JSON.stringify(movie)); 
+      localStorage.setItem("category",categoryName)// Save movie details in local storage
+     
+      
       window.location.href = 'details.html'; // Redirect to details page
     });
 

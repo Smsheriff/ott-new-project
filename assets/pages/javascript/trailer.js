@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const movieTitle = localStorage.getItem('moviename');
   console.log('Movie Title from LocalStorage:', movieTitle); // Debugging log
 
+  const categoryName = localStorage.getItem("category")
   if (!movieTitle) {
     alert('Movie name not found in localStorage. Redirecting back.');
     window.history.back();
@@ -32,9 +33,13 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   try {
+    
+    
     // Reference to the "Top 10 movies" in Realtime Database
-    const dbRef = ref(db);
-    const snapshot = await get(child(dbRef, 'Top 10 movies'));
+    const dbRef = ref(db,`${categoryName}`);
+    const snapshot = await get(dbRef);
+    console.log(dbRef);
+    
 
     if (snapshot.exists()) {
       const moviesData = snapshot.val();
