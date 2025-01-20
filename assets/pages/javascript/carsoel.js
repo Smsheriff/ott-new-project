@@ -31,6 +31,8 @@ fetch('../json/carsoel.json')
   .then((data) => {
     // Initialize a variable to store all movies
     const allMovies = data;
+  
+    
 
     // Create the custom carousel and save movies to Firestore
     Object.keys(allMovies).forEach((category) => {

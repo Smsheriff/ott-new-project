@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Movie Rental</title>
   <link rel="stylesheet" href="../css/rent.css" />
+
 </head>
 <body>
   <button id="back-btn" onclick="window.history.back()">
@@ -17,7 +18,7 @@
     <h1 id="movie-title">Rent Movie</h1>
     <form id="rental-form">
       <label for="duration">Select rental duration:</label>
-      <select id="duration" >
+      <select id="duration">
         <option value="">Choose a duration</option>
         <option value="1">1 Day</option>
         <option value="3">3 Days</option>
@@ -25,19 +26,19 @@
       </select>
       <span class="error" id="duration-error"></span>
 
-      <p id="price">Price: 299</p>
+      <p id="price">Price: <span id="price-value">0.00</span></p>
 
       <h3>Credit Card Information</h3>
       <label for="card-number">Card Number:</label>
-      <input type="text" id="card-number" placeholder="Enter card number"  />
+      <input type="text" id="card-number" placeholder="Enter card number" />
       <span class="error" id="card-error"></span>
 
       <label for="expiry">Expiry Date (MM/YY):</label>
-      <input type="text" id="expiry" placeholder="MM/YY"  />
+      <input type="text" id="expiry" placeholder="MM/YY" />
       <span class="error" id="expiry-error"></span>
 
       <label for="cvv">CVV:</label>
-      <input type="text" id="cvv" placeholder="Enter CVV"  />
+      <input type="text" id="cvv" placeholder="Enter CVV" />
       <span class="error" id="cvv-error"></span>
 
       <button type="submit" id="confirm-btn">Confirm Rental</button>
@@ -46,8 +47,8 @@
 
   <!-- Add EmailJS SDK -->
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-
-  <!-- Firebase SDK -->
-  <script type="module" src="../javascript/rent.js"></script>
+  <script defer  src="../javascript/rent.js" type="module"></script>
 </body>
 </html>
+
+

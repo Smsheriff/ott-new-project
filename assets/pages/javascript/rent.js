@@ -16,64 +16,76 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
-
 emailjs.init("KwWbISNEsnBNCyjRa");
 
-let userEmail = localStorage.getItem('mail');
+let userEmail = localStorage.getItem("mail");
+let movieName = localStorage.getItem("moviename");
 
-// Retrieve and set movie name
-let movieName = localStorage.getItem('moviename');
 if (movieName) {
-  document.getElementById('movie-title').innerText = movieName;
+  document.getElementById("movie-title").innerText = movieName;
 } else {
-  console.error('Movie name not found in localStorage');
+  console.error("Movie name not found in localStorage");
 }
 
 // Check if user is logged in
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    userEmail = localStorage.getItem('mail');
+    userEmail = localStorage.getItem("mail");
   } else {
-    alert('User not logged in. Redirecting to login page.');
-    window.location.href = 'login.html';
+    alert("User not logged in. Redirecting to login page.");
+    window.location.href = "login.html";
   }
 });
 
+// Update price dynamically
+const durationSelect = document.getElementById("duration");
+const priceDisplay = document.getElementById("price-value");
+
+const calculatePrice = (duration) => {
+  switch (duration) {
+    case "1":
+      return 99.00;
+    case "3":
+      return 120.00;
+    case "7":
+      return 299.00;
+    default:
+      return 0.0;
+  }
+};
+
+durationSelect.addEventListener("change", () => {
+  const duration = durationSelect.value;
+  const price = calculatePrice(duration);
+  priceDisplay.textContent = price.toFixed(2);
+});
+
 // Form submission with validation
-document.getElementById('rental-form').addEventListener('submit', async (e) => {
+document.getElementById("rental-form").addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const duration = document.getElementById('duration').value;
-  const cardNumber = document.getElementById('card-number').value;
-  const expiry = document.getElementById('expiry').value;
-  const cvv = document.getElementById('cvv').value;
+  const duration = durationSelect.value;
+  const cardNumber = document.getElementById("card-number").value;
+  const expiry = document.getElementById("expiry").value;
+  const cvv = document.getElementById("cvv").value;
 
   let isValid = true;
+  document.querySelectorAll(".error").forEach((span) => (span.innerText = ""));
 
-  // Clear all error messages
-  document.querySelectorAll('.error').forEach(span => span.innerText = '');
-
-  // Validate duration
   if (!duration) {
-    document.getElementById('duration-error').innerText = 'Please select a rental duration.';
+    document.getElementById("duration-error").innerText = "Please select a rental duration.";
     isValid = false;
   }
-
-  // Validate card number
   if (!/^\d{16}$/.test(cardNumber)) {
-    document.getElementById('card-error').innerText = 'Invalid card number. Enter 16 digits.';
+    document.getElementById("card-error").innerText = "Invalid card number. Enter 16 digits.";
     isValid = false;
   }
-
-  // Validate expiry date
   if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(expiry)) {
-    document.getElementById('expiry-error').innerText = 'Invalid expiry date. Use MM/YY format.';
+    document.getElementById("expiry-error").innerText = "Invalid expiry date. Use MM/YY format.";
     isValid = false;
   }
-
-  // Validate CVV
   if (!/^\d{3,4}$/.test(cvv)) {
-    document.getElementById('cvv-error').innerText = 'Invalid CVV. Enter 3 or 4 digits.';
+    document.getElementById("cvv-error").innerText = "Invalid CVV. Enter 3 or 4 digits.";
     isValid = false;
   }
 
@@ -82,41 +94,32 @@ document.getElementById('rental-form').addEventListener('submit', async (e) => {
   const price = calculatePrice(duration);
 
   try {
-    await addDoc(collection(db, 'transactions'), {
+    await addDoc(collection(db, "transactions"), {
       email: userEmail,
       movieName: movieName,
       duration: duration,
       price: price,
-      status: 'Processing',
+      status: "Processing",
       timestamp: serverTimestamp(),
     });
 
     const emailParams = {
-      movieTitle: movieName || 'Unknown',
+      movieTitle: movieName || "Unknown",
       duration: `${duration} Days`,
       price: `$${price}`,
       user_email: userEmail,
     };
 
-    emailjs.send("service_11aquyr", "template_lur98gk", emailParams)
+    emailjs
+      .send("service_11aquyr", "template_lur98gk", emailParams)
       .then(() => {
-        alert('Rental confirmed! Check your email.');
-        setTimeout(() => window.location.href = './home.html', 5000);
+        alert("Rental confirmed! Check your email.");
+        setTimeout(() => window.location.href = "./home.html", 5000);
       })
       .catch(() => {
-        alert('Rental confirmed, but email failed.');
+        alert("Rental confirmed, but email failed.");
       });
-
   } catch (error) {
-    alert('Error processing rental. Try again.');
+    alert("Error processing rental. Try again.");
   }
 });
-
-function calculatePrice(duration) {
-  switch (duration) {
-    case '1': return 2.99;
-    case '3': return 5.99;
-    case '7': return 9.99;
-    default: return 0.00;
-  }
-}
