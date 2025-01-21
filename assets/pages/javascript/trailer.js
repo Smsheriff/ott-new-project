@@ -72,4 +72,3 @@ document.addEventListener('DOMContentLoaded', async () => {
     window.history.back();
   });
 });
-console.log('Baahubali: The Beginning')

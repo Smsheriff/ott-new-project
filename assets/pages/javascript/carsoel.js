@@ -106,18 +106,28 @@ function createCustomCarousel(categoryName, movies) {
     // Add event listener for the watchlist button
     movieCard.querySelector('.watchlist-btn').addEventListener('click', () => {
       // Fetch watchlist from localStorage
-      let watchlist = JSON.parse(localStorage.getItem('watchlist')) || [];
+      let watchlist = JSON.parse(localStorage.getItem('watchlist')) || {};
+      
+      
 
       // Check if movie is already in watchlist
-      if (!watchlist.some((m) => m.id === movie.id)) {
-        watchlist.push(movie); // Add movie to watchlist
+      if(Object.keys(watchlist).length === 0){
+        watchlist[categoryName] = movie;
         localStorage.setItem('watchlist', JSON.stringify(watchlist));
       }
+      else if(watchlist[categoryName] != undefined && watchlist[categoryName][movie] != undefined && watchlist[categoryName][movie][id] != undefined ) {
+            localStorage.setItem('watchlist', JSON.stringify(watchlist));
+      }
+      else{
+        watchlist[categoryName] = movie // Add movie to watchlist
+            localStorage.setItem('watchlist', JSON.stringify(watchlist));
+      }
+      
 
       // Redirect to watchlist page
       window.location.href = '../html/watchlist.html';
     });
-  });
+  }); 
 
   const prevButton = document.createElement('button');
   prevButton.textContent = '←';
