@@ -5,7 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // Fetch movie details from localStorage
   const selectedMovie = JSON.parse(localStorage.getItem('selectedMovie'));
   localStorage.setItem('moviename', selectedMovie.title)
-  
+  localStorage.setItem("trailerLink",selectedMovie.trailerUrl
+  )
   const category =  localStorage.getItem("category")
   // Check if movie details are available
   if (!selectedMovie) {

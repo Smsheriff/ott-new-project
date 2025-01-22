@@ -1,5 +1,3 @@
-
-
 // Import necessary Firebase modules
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js';
 import { getFirestore, collection, setDoc, doc } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js';
@@ -30,28 +28,10 @@ fetch('../json/movies.json')
     return response.json();
   })
   .then(data => {
-    if (Array.isArray(data.movies_slide)) {
-      saveMoviesToFirestore(data.movies_slide);
-      initializeCarousel(data.movies_slide);
-    } else {
-      console.error("Invalid data format:", data);
-    }
-  })
+  initializeCarousel(data);
+   })
   .catch(error => console.error('Error loading JSON:', error));
 
-// Save Movies Data to Firestore
-async function saveMoviesToFirestore(movies) {
-  const moviesRef = collection(db, 'movies_slide');
-  try {
-    for (const movie of movies) {
-      const movieDocRef = doc(moviesRef, movie.id); 
-      await setDoc(movieDocRef, movie);
-      console.log(`Movie ${movie.title} saved successfully.`);
-    }
-  } catch (error) {
-    console.error("Error saving movie to Firestore: ", error);
-  }
-}
 
 // Navbar scroll effect
 const navbar = document.querySelector('.navbar');
@@ -65,12 +45,10 @@ if (navbar) {
   });
 }
 
-
-
-
-
   function initializeCarousel(movies) {
   const carouselContainer = document.querySelector('.carousel-container');
+  console.log(carouselContainer);
+  
   const prevButton = document.getElementById('prev');
   const nextButton = document.getElementById('next');
 
@@ -83,17 +61,21 @@ if (navbar) {
   let isAnimating = false;
 
   // Create and load movie cards into the carousel
-  movies.forEach(movie => {
-    const movieCard = createMovieCard(movie);
+  console.log(movies);
+  
+ for(let movie in movies){
+  movies[movie].forEach(element => {
+    const movieCard = createMovieCard(element);
     carouselContainer.appendChild(movieCard);
-  });
+  }); 
+  }
 
-  // Duplicate slides for infinite loop effect
-  movies.forEach(movie => {
-    const duplicateCard = createMovieCard(movie);
-    carouselContainer.appendChild(duplicateCard);
-  });
-
+  for(let movie in movies){
+    movies[movie].forEach(element => {
+      const movieCard = createMovieCard(element);
+      carouselContainer.appendChild(movieCard);
+    });
+    }
   // Set the initial position
   updateCarousel(currentIndex, carouselContainer);
 
@@ -180,6 +162,8 @@ if (navbar) {
   }
 
   function updateCarousel(index, container) {
+    
+    
     const slideWidth = container.firstElementChild.offsetWidth;
     const offset = -index * slideWidth;
     container.style.transform = `translateX(${offset}px)`; 

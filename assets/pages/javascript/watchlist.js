@@ -33,9 +33,9 @@ document.addEventListener('DOMContentLoaded', () => {
   
         // Remove movie from watchlist when remove button is clicked
         item.querySelector('.remove-btn').addEventListener('click', () => {
-          watchlist = watchlist.filter((m) => m.id !== watchlist[movie]["id"]);
-          localStorage.setItem('watchlist', JSON.stringify(watchlist));
-          renderWatchlist();
+        delete watchlist[movie];
+        localStorage.setItem('watchlist', JSON.stringify(watchlist));
+        history.go()
         });
 
         // Add event listener to the watch button
@@ -53,4 +53,5 @@ document.addEventListener('DOMContentLoaded', () => {
   
     renderWatchlist(); 
   });
-  
+
+  console.log(`for check${localStorage.getItem('watchlist')}`)

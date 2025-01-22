@@ -1,5 +1,6 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js';
 import { getFirestore, collection, setDoc, doc } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js';
+import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
 import { getAuth } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js';
 import { getAnalytics } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-analytics.js';
 
@@ -20,8 +21,10 @@ const db = getFirestore(app);
 const auth = getAuth(app);
 const analytics = getAnalytics(app);
 
+const realDb = getDatabase(app);
+
 // Fetch the movie data
-fetch('../json/carsoel.json')
+fetch('../json/data.json')
   .then((response) => {
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -38,24 +41,22 @@ fetch('../json/carsoel.json')
     Object.keys(allMovies).forEach((category) => {
       const movies = allMovies[category];
       createCustomCarousel(category, movies);
-      saveMoviesToFirestore(category, movies); 
+     
     });
   })
   .catch((error) => console.error('Error loading JSON:', error.message));
 
-// Function to save movies to Firestore
-async function saveMoviesToFirestore(categoryName, movies) {
-  const collectionRef = collection(db, categoryName);
-  try {
-    for (const movie of movies) {
-      const docRef = doc(collectionRef, movie.id);
-      await setDoc(docRef, movie);
-      console.log(`Movie "${movie.title}" saved to Firestore in category "${categoryName}".`);
-    }
-  } catch (error) {
-    console.error(`Error saving movies to Firestore for category "${categoryName}":`, error);
-  }
-}
+
+let allMoviesData = await getData();
+
+async function getData(){
+  let dbRef = await ref(realDb);
+  let resposne = await get(dbRef);
+
+  let data = await resposne.val();
+
+  return data;
+} 
 
 // Function to create the carousel for each category
 function createCustomCarousel(categoryName, movies) {
@@ -182,22 +183,6 @@ function createCustomCarousel(categoryName, movies) {
 
 
 
-
-// To store all movies from JSON
-let allMoviesData = {}; 
-fetch('../json/carsoel.json')
-  .then((response) => {
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    return response.json();
-  })
-  .then((data) => {
-    allMoviesData = data;
-    console.log(allMoviesData);
-  })
-  .catch((error) => console.error('Error loading JSON:', error.message));
-
 // DOM Elements
 const searchBox = document.getElementById('search-box');
 const searchDropdown = document.getElementById('search-dropdown');
@@ -228,7 +213,7 @@ searchBox.addEventListener('input', () => {
       item.addEventListener('click', () => {
         localStorage.setItem('selectedMovie', JSON.stringify(movie)); 
 
-        window.location.href = `/assets/pages/html/details.html`;
+        window.location.href = `../../../assets/pages/html/details.html`;
       });
       searchDropdown.appendChild(item);
     });

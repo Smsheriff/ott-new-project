@@ -17,9 +17,13 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded',  () => {
   const trailerVideo = document.getElementById('trailer-video');
   const goBackBtn = document.getElementById('go-back-btn');
+
+  const trailerUrl = localStorage.getItem("trailerLink");
+
+  trailerVideo.src = trailerUrl;
 
   // Fetch movie title from localStorage
   const movieTitle = localStorage.getItem('moviename');
@@ -27,46 +31,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const categoryName = localStorage.getItem("category")
   if (!movieTitle) {
-    alert('Movie name not found in localStorage. Redirecting back.');
+    alert('Movie name not found , Redirecting back.');
     window.history.back();
     return;
   }
-
-  try {
-    
-    
-    // Reference to the "Top 10 movies" in Realtime Database
-    const dbRef = ref(db,`${categoryName}`);
-    const snapshot = await get(dbRef);
-    console.log(dbRef);
-    
-
-    if (snapshot.exists()) {
-      const moviesData = snapshot.val();
-      console.log(moviesData)
-      console.log('Movies Data:', moviesData); // Debugging log
-
-      // Find the movie with the matching title
-      const movie = moviesData.find(m => m.title === movieTitle);
-
-      if (movie && movie.trailerUrl) {
-        trailerVideo.src = movie.trailerUrl;
-        document.getElementById('movie-title').innerText = `Trailer: ${movieTitle}`;
-      } else {
-        alert('Trailer URL not available for this movie.');
-        window.history.back();
-      }
-    } else {
-      console.error('No data available!');
-      alert('Movie details not found.');
-      // window.history.back();
-    }
-  } catch (error) {
-    console.error('Error fetching trailer:', error);
-    alert('Error loading trailer.');
-    window.history.back();
-  }
-
   // Go back to the previous page
   goBackBtn.addEventListener('click', () => {
     window.history.back();
